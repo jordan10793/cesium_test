@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesium test</title>
+    <!-- Include the CesiumJS JavaScript and CSS files -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.103/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.103/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+       Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MDU3M2JjYy04ZWI5LTQwZDctYTE4YS0wMzE0YTVmYWJhMmQiLCJpZCI6MTMxNTA2LCJpYXQiOjE2ODAyNDcxNTN9.aHMTo_Ayrdvsw9VRXg_u1Lh6Utzj2eVcuUkxXiBvh58';
+  
+       var viewer = new Cesium.Viewer("cesiumContainer", {
+  terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
+    url:
+      "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+  }),
+});
+
+// Lock camera to a point
+var center = Cesium.Cartesian3.fromDegrees(-84.70094784748697, 10.463258907129378, 1300);
+var transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+viewer.scene.camera.lookAtTransform(transform, new Cesium.HeadingPitchRange(0, -Math.PI/8, 4500));
+
+// Orbit this point
+viewer.clock.onTick.addEventListener(function(clock) {
+  viewer.scene.camera.rotateRight(0.01);
+});
+    </script>
+   </div> 
+</body>
+</html>
